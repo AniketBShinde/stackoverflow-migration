@@ -1,0 +1,109 @@
+[2026-05-18T21:36:46.274+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-18T21:36:46.356+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP scheduled__2026-05-17T00:00:00+00:00 [queued]>
+[2026-05-18T21:36:46.369+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP scheduled__2026-05-17T00:00:00+00:00 [queued]>
+[2026-05-18T21:36:46.371+0000] {taskinstance.py:2306} INFO - Starting attempt 16 of 20
+[2026-05-18T21:36:46.392+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): AUTOMATE_CLICKHOUSE_SETUP> on 2026-05-17 00:00:00+00:00
+[2026-05-18T21:36:46.403+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_medallion_pipeline_v2', 'AUTOMATE_CLICKHOUSE_SETUP', 'scheduled__2026-05-17T00:00:00+00:00', '--job-id', '138', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpl6oc88j_']
+[2026-05-18T21:36:46.410+0000] {standard_task_runner.py:91} INFO - Job 138: Subtask AUTOMATE_CLICKHOUSE_SETUP
+[2026-05-18T21:36:46.415+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=411) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-18T21:36:46.417+0000] {standard_task_runner.py:63} INFO - Started process 412 to run task
+[2026-05-18T21:36:46.614+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP scheduled__2026-05-17T00:00:00+00:00 [running]> on host 4849cc25ab0e
+[2026-05-18T21:36:46.890+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_medallion_pipeline_v2' AIRFLOW_CTX_TASK_ID='AUTOMATE_CLICKHOUSE_SETUP' AIRFLOW_CTX_EXECUTION_DATE='2026-05-17T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='16' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-05-17T00:00:00+00:00'
+[2026-05-18T21:36:46.892+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-18T21:36:56.365+0000] {_client.py:1025} INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+[2026-05-18T21:36:58.981+0000] {logging_mixin.py:188} INFO - --- CLEANING UP POTENTIAL PREVIOUS FAILED RUNS ---
+[2026-05-18T21:36:59.893+0000] {logging_mixin.py:188} INFO - --- GENERATED SQL FROM CLAUDE ---
+[2026-05-18T21:36:59.894+0000] {logging_mixin.py:188} INFO - CREATE TABLE big_query.stackoverflow_final
+(
+    id Int64,
+    post_type_id Int64,
+    accepted_answer_id Nullable(Int64),
+    creation_date DateTime64(3),
+    score Int64,
+    view_count Nullable(Int64),
+    body String,
+    owner_user_id Nullable(Int64),
+    owner_display_name Nullable(String),
+    last_editor_user_id Nullable(Int64),
+    last_editor_display_name Nullable(String),
+    last_edit_date Nullable(DateTime64(3)),
+    last_activity_date DateTime64(3),
+    title Nullable(String),
+    tags Nullable(String),
+    answer_count Nullable(Int64),
+    comment_count Int64,
+    favorite_count Nullable(Int64),
+    community_owned_date Nullable(DateTime64(3)),
+    parent_id Nullable(Int64)
+)
+ENGINE = MergeTree
+ORDER BY (id, creation_date);
+
+CREATE TABLE big_query.stackoverflow_s3queue
+(
+    id Int64,
+    post_type_id Int64,
+    accepted_answer_id Nullable(Int64),
+    creation_date DateTime64(3),
+    score Int64,
+    view_count Nullable(Int64),
+    body String,
+    owner_user_id Nullable(Int64),
+    owner_display_name Nullable(String),
+    last_editor_user_id Nullable(Int64),
+    last_editor_display_name Nullable(String),
+    last_edit_date Nullable(DateTime64(3)),
+    last_activity_date DateTime64(3),
+    title Nullable(String),
+    tags Nullable(String),
+    answer_count Nullable(Int64),
+    comment_count Int64,
+    favorite_count Nullable(Int64),
+    community_owned_date Nullable(DateTime64(3)),
+    parent_id Nullable(Int64)
+)
+ENGINE = S3Queue('https://bigquerybuckets3.s3.us-east-1.amazonaws.com/raw-data/stackoverflow/*.parquet', 'Parquet')
+SETTINGS mode = 'unordered', s3queue_role_arn = 'arn:aws:iam::227855914163:role/ClickHouse-S3-ReadOnly-StackOverflow';
+
+CREATE MATERIALIZED VIEW big_query.stackoverflow_mv TO big_query.stackoverflow_final AS SELECT * FROM big_query.stackoverflow_s3queue;
+[2026-05-18T21:37:00.325+0000] {logging_mixin.py:188} INFO - Successfully Executed: CREATE TABLE big_query.stackoverflow_final
+(
+    id Int64,
+ ...
+[2026-05-18T21:37:00.629+0000] {logging_mixin.py:188} INFO - FAILED to execute statement: CREATE TABLE big_query.stackoverflow_s3queue
+(
+    id Int64,...
+[2026-05-18T21:37:00.629+0000] {logging_mixin.py:188} INFO - Error detail: Received ClickHouse exception, code: 115, server response: Code: 115. DB::Exception: Unknown setting 'role_arn': for storage S3Queue. (UNKNOWN_SETTING) (for url https://d6u4rl4smv.us-east-1.aws.clickhouse.cloud:8443)
+[2026-05-18T21:37:00.630+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-18T21:37:00.631+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_migration_dag.py", line 94, in run_llm_infra_setup
+    ch_client.command(statement)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 468, in command
+    response = self._raw_request(payload, params, headers, method, fields=fields, server_wait=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 599, in _raw_request
+    self._error_handler(response)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 511, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: Received ClickHouse exception, code: 115, server response: Code: 115. DB::Exception: Unknown setting 'role_arn': for storage S3Queue. (UNKNOWN_SETTING) (for url https://d6u4rl4smv.us-east-1.aws.clickhouse.cloud:8443)
+[2026-05-18T21:37:00.681+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_medallion_pipeline_v2, task_id=AUTOMATE_CLICKHOUSE_SETUP, run_id=scheduled__2026-05-17T00:00:00+00:00, execution_date=20260517T000000, start_date=20260518T213646, end_date=20260518T213700
+[2026-05-18T21:37:00.713+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 138 for task AUTOMATE_CLICKHOUSE_SETUP (Received ClickHouse exception, code: 115, server response: Code: 115. DB::Exception: Unknown setting 'role_arn': for storage S3Queue. (UNKNOWN_SETTING) (for url https://d6u4rl4smv.us-east-1.aws.clickhouse.cloud:8443); 412)
+[2026-05-18T21:37:00.741+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-05-18T21:37:00.808+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-18T21:37:00.812+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

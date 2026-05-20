@@ -1,0 +1,66 @@
+[2026-05-06T14:19:37.559+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-06T14:19:37.619+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.automated_mcp_infra_setup manual__2026-05-06T14:17:15.170042+00:00 [queued]>
+[2026-05-06T14:19:37.633+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.automated_mcp_infra_setup manual__2026-05-06T14:17:15.170042+00:00 [queued]>
+[2026-05-06T14:19:37.634+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-06T14:19:37.655+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): automated_mcp_infra_setup> on 2026-05-06 14:17:15.170042+00:00
+[2026-05-06T14:19:37.671+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=211) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-06T14:19:37.667+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_automated_mcp_pipeline', 'automated_mcp_infra_setup', 'manual__2026-05-06T14:17:15.170042+00:00', '--job-id', '43', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpi1_3h77l']
+[2026-05-06T14:19:37.672+0000] {standard_task_runner.py:63} INFO - Started process 212 to run task
+[2026-05-06T14:19:37.672+0000] {standard_task_runner.py:91} INFO - Job 43: Subtask automated_mcp_infra_setup
+[2026-05-06T14:19:37.854+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_automated_mcp_pipeline.automated_mcp_infra_setup manual__2026-05-06T14:17:15.170042+00:00 [running]> on host be10bde04c2c
+[2026-05-06T14:19:38.129+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_automated_mcp_pipeline' AIRFLOW_CTX_TASK_ID='automated_mcp_infra_setup' AIRFLOW_CTX_EXECUTION_DATE='2026-05-06T14:17:15.170042+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-06T14:17:15.170042+00:00'
+[2026-05-06T14:19:38.130+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-06T14:19:38.148+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-06T14:19:38.149+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_migration_dag.py", line 91, in mcp_automation_wrapper
+    return asyncio.run(run_llm_infra_setup())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_migration_dag.py", line 32, in run_llm_infra_setup
+    server_params = StdioServerParameters(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pydantic/main.py", line 263, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for StdioServerParameters
+args.3
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+args.7
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+[2026-05-06T14:19:38.204+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_automated_mcp_pipeline, task_id=automated_mcp_infra_setup, run_id=manual__2026-05-06T14:17:15.170042+00:00, execution_date=20260506T141715, start_date=20260506T141937, end_date=20260506T141938
+[2026-05-06T14:19:38.243+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 43 for task automated_mcp_infra_setup (2 validation errors for StdioServerParameters
+args.3
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+args.7
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type; 212)
+[2026-05-06T14:19:38.289+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-05-06T14:19:38.359+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-06T14:19:38.364+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

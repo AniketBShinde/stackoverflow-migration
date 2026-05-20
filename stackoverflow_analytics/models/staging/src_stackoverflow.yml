@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: stackoverflow_raw
+    database: big_query
+    tables:
+      - name: stackoverflow_final

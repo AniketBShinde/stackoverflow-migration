@@ -1,0 +1,33 @@
+[2026-05-19T11:44:30.159+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-19T11:44:30.219+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.trigger_glue_migration manual__2026-05-19T11:44:27.449021+00:00 [queued]>
+[2026-05-19T11:44:30.233+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.trigger_glue_migration manual__2026-05-19T11:44:27.449021+00:00 [queued]>
+[2026-05-19T11:44:30.235+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 5
+[2026-05-19T11:44:30.255+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): trigger_glue_migration> on 2026-05-19 11:44:27.449021+00:00
+[2026-05-19T11:44:30.273+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_medallion_pipeline_v2', 'trigger_glue_migration', 'manual__2026-05-19T11:44:27.449021+00:00', '--job-id', '184', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpphij4hd9']
+[2026-05-19T11:44:30.277+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1135) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-19T11:44:30.279+0000] {standard_task_runner.py:91} INFO - Job 184: Subtask trigger_glue_migration
+[2026-05-19T11:44:30.279+0000] {standard_task_runner.py:63} INFO - Started process 1136 to run task
+[2026-05-19T11:44:30.482+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_medallion_pipeline_v2.trigger_glue_migration manual__2026-05-19T11:44:27.449021+00:00 [running]> on host cba14ea35e20
+[2026-05-19T11:44:30.854+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_medallion_pipeline_v2' AIRFLOW_CTX_TASK_ID='trigger_glue_migration' AIRFLOW_CTX_EXECUTION_DATE='2026-05-19T11:44:27.449021+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-19T11:44:27.449021+00:00'
+[2026-05-19T11:44:30.857+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-19T11:44:30.878+0000] {glue.py:173} INFO - Initializing AWS Glue Job: BigQ_to_S3_2. Wait for completion: True
+[2026-05-19T11:44:30.879+0000] {glue.py:364} INFO - Checking if job already exists: BigQ_to_S3_2
+[2026-05-19T11:44:30.951+0000] {base.py:84} INFO - Using connection ID 'aws_default' for task execution.
+[2026-05-19T11:44:30.954+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='aws_default', conn_type='aws') credentials retrieved from login and password.
+[2026-05-19T11:44:33.168+0000] {glue.py:194} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/BigQ_to_S3_2/run/jr_9c0776a21d8752ebc827377b10b03f946216edf5458c172d765260037ed183cc
+[2026-05-19T11:44:33.505+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:44:39.871+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:44:46.219+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:44:52.572+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:44:58.953+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:45:05.310+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:45:11.796+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:45:18.161+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:45:24.526+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-19T11:45:26.394+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2026-05-19T11:45:26.396+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-19T11:45:26.399+0000] {process_utils.py:132} INFO - Sending 15 to group 1136. PIDs of all processes in the group: [1136]
+[2026-05-19T11:45:26.399+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 1136
+[2026-05-19T11:45:26.400+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2026-05-19T11:45:26.401+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-19T11:45:26.493+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=1136, status='terminated', exitcode=0, started='11:44:30') (1136) terminated with exit code 0

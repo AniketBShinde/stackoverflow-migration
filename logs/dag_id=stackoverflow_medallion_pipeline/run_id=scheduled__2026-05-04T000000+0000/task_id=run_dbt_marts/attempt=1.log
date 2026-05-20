@@ -1,0 +1,35 @@
+[2026-05-05T15:26:20.831+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-05T15:26:20.896+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline.run_dbt_marts scheduled__2026-05-04T00:00:00+00:00 [queued]>
+[2026-05-05T15:26:20.909+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline.run_dbt_marts scheduled__2026-05-04T00:00:00+00:00 [queued]>
+[2026-05-05T15:26:20.911+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-05T15:26:20.936+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_dbt_marts> on 2026-05-04 00:00:00+00:00
+[2026-05-05T15:26:20.947+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_medallion_pipeline', 'run_dbt_marts', 'scheduled__2026-05-04T00:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmphf9n1baa']
+[2026-05-05T15:26:20.952+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask run_dbt_marts
+[2026-05-05T15:26:20.955+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=286) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-05T15:26:20.956+0000] {standard_task_runner.py:63} INFO - Started process 287 to run task
+[2026-05-05T15:26:21.127+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_medallion_pipeline.run_dbt_marts scheduled__2026-05-04T00:00:00+00:00 [running]> on host c4d7843556b6
+[2026-05-05T15:26:21.416+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_medallion_pipeline' AIRFLOW_CTX_TASK_ID='run_dbt_marts' AIRFLOW_CTX_EXECUTION_DATE='2026-05-04T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-05-04T00:00:00+00:00'
+[2026-05-05T15:26:21.417+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-05T15:26:21.436+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-05T15:26:21.438+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/stackoverflow_analytics && dbt run --select marts']
+[2026-05-05T15:26:21.449+0000] {subprocess.py:86} INFO - Output:
+[2026-05-05T15:26:24.175+0000] {subprocess.py:93} INFO - [0m15:26:24  Running with dbt=1.8.3
+[2026-05-05T15:26:24.550+0000] {subprocess.py:93} INFO - [0m15:26:24  Registered adapter: clickhouse=1.8.3
+[2026-05-05T15:26:25.381+0000] {subprocess.py:93} INFO - [0m15:26:25  Found 2 models, 2 data tests, 1 source, 463 macros
+[2026-05-05T15:26:25.388+0000] {subprocess.py:93} INFO - [0m15:26:25
+[2026-05-05T15:26:29.314+0000] {subprocess.py:93} INFO - [0m15:26:29  Concurrency: 1 threads (target='dev')
+[2026-05-05T15:26:29.316+0000] {subprocess.py:93} INFO - [0m15:26:29
+[2026-05-05T15:26:29.332+0000] {subprocess.py:93} INFO - [0m15:26:29  1 of 1 START sql table model `big_query`.`fct_tag_analysis` .................... [RUN]
+[2026-05-05T15:26:46.854+0000] {subprocess.py:93} INFO - [0m15:26:46  1 of 1 OK created sql table model `big_query`.`fct_tag_analysis` ............... [[32mOK[0m in 17.52s]
+[2026-05-05T15:26:46.865+0000] {subprocess.py:93} INFO - [0m15:26:46
+[2026-05-05T15:26:46.867+0000] {subprocess.py:93} INFO - [0m15:26:46  Finished running 1 table model in 0 hours 0 minutes and 21.48 seconds (21.48s).
+[2026-05-05T15:26:46.947+0000] {subprocess.py:93} INFO - [0m15:26:46
+[2026-05-05T15:26:46.949+0000] {subprocess.py:93} INFO - [0m15:26:46  [32mCompleted successfully[0m
+[2026-05-05T15:26:46.952+0000] {subprocess.py:93} INFO - [0m15:26:46
+[2026-05-05T15:26:46.956+0000] {subprocess.py:93} INFO - [0m15:26:46  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[2026-05-05T15:26:48.596+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-05-05T15:26:48.597+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-05T15:26:48.726+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stackoverflow_medallion_pipeline, task_id=run_dbt_marts, run_id=scheduled__2026-05-04T00:00:00+00:00, execution_date=20260504T000000, start_date=20260505T152620, end_date=20260505T152648
+[2026-05-05T15:26:48.798+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-05-05T15:26:48.859+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-05T15:26:48.865+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

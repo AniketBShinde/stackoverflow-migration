@@ -1,0 +1,53 @@
+[2026-05-12T05:43:37.464+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-12T05:43:37.616+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline.run_dbt_staging scheduled__2026-05-11T00:00:00+00:00 [queued]>
+[2026-05-12T05:43:37.638+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline.run_dbt_staging scheduled__2026-05-11T00:00:00+00:00 [queued]>
+[2026-05-12T05:43:37.640+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-05-12T05:43:37.669+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_dbt_staging> on 2026-05-11 00:00:00+00:00
+[2026-05-12T05:43:37.686+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_medallion_pipeline', 'run_dbt_staging', 'scheduled__2026-05-11T00:00:00+00:00', '--job-id', '80', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpaisba45m']
+[2026-05-12T05:43:37.690+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=278) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-12T05:43:37.692+0000] {standard_task_runner.py:91} INFO - Job 80: Subtask run_dbt_staging
+[2026-05-12T05:43:37.694+0000] {standard_task_runner.py:63} INFO - Started process 279 to run task
+[2026-05-12T05:43:38.041+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_medallion_pipeline.run_dbt_staging scheduled__2026-05-11T00:00:00+00:00 [running]> on host 6d02862129f8
+[2026-05-12T05:43:38.658+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_medallion_pipeline' AIRFLOW_CTX_TASK_ID='run_dbt_staging' AIRFLOW_CTX_EXECUTION_DATE='2026-05-11T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-05-11T00:00:00+00:00'
+[2026-05-12T05:43:38.660+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-12T05:43:38.700+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-12T05:43:38.704+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/stackoverflow_analytics && dbt run --select staging']
+[2026-05-12T05:43:38.730+0000] {subprocess.py:86} INFO - Output:
+[2026-05-12T05:43:47.727+0000] {subprocess.py:93} INFO - [0m05:43:47  Running with dbt=1.8.3
+[2026-05-12T05:43:48.750+0000] {subprocess.py:93} INFO - [0m05:43:48  Registered adapter: clickhouse=1.8.3
+[2026-05-12T05:43:51.130+0000] {subprocess.py:93} INFO - [0m05:43:51  Found 2 models, 2 data tests, 1 source, 463 macros
+[2026-05-12T05:43:51.140+0000] {subprocess.py:93} INFO - [0m05:43:51
+[2026-05-12T05:44:05.115+0000] {subprocess.py:93} INFO - [0m05:44:05  Concurrency: 1 threads (target='dev')
+[2026-05-12T05:44:05.117+0000] {subprocess.py:93} INFO - [0m05:44:05
+[2026-05-12T05:44:05.166+0000] {subprocess.py:93} INFO - [0m05:44:05  1 of 1 START sql incremental model `big_query`.`stg_posts` ..................... [RUN]
+[2026-05-12T05:44:05.875+0000] {subprocess.py:93} INFO - [0m05:44:05  1 of 1 ERROR creating sql incremental model `big_query`.`stg_posts` ............ [[31mERROR[0m in 0.70s]
+[2026-05-12T05:44:05.892+0000] {subprocess.py:93} INFO - [0m05:44:05
+[2026-05-12T05:44:05.896+0000] {subprocess.py:93} INFO - [0m05:44:05  Finished running 1 incremental model in 0 hours 0 minutes and 14.75 seconds (14.75s).
+[2026-05-12T05:44:06.100+0000] {subprocess.py:93} INFO - [0m05:44:06
+[2026-05-12T05:44:06.104+0000] {subprocess.py:93} INFO - [0m05:44:06  [31mCompleted with 1 error and 0 warnings:[0m
+[2026-05-12T05:44:06.107+0000] {subprocess.py:93} INFO - [0m05:44:06
+[2026-05-12T05:44:06.113+0000] {subprocess.py:93} INFO - [0m05:44:06    Database Error in model stg_posts (models/staging/stg_posts.sql)
+[2026-05-12T05:44:06.114+0000] {subprocess.py:93} INFO -   Received ClickHouse exception, code: 60, server response: Code: 60. DB::Exception: Unknown table expression identifier 'big_query.stackoverflow_final' in scope SELECT id AS post_id, title, toDateTime64(creation_date, 3) AS created_at, score, view_count, comment_count, assumeNotNull(splitByChar(',', replaceRegexpAll(ifNull(tags, ''), '[\\[\\]\\s\']', ''))) AS tags FROM big_query.stackoverflow_final. (UNKNOWN_TABLE) (for url https://d6u4rl4smv.us-east-1.aws.clickhouse.cloud:8443)
+[2026-05-12T05:44:06.117+0000] {subprocess.py:93} INFO - [0m05:44:06
+[2026-05-12T05:44:06.120+0000] {subprocess.py:93} INFO - [0m05:44:06  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
+[2026-05-12T05:44:07.921+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-12T05:44:07.923+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-12T05:44:08.041+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-12T05:44:08.055+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=stackoverflow_medallion_pipeline, task_id=run_dbt_staging, run_id=scheduled__2026-05-11T00:00:00+00:00, execution_date=20260511T000000, start_date=20260512T054337, end_date=20260512T054408
+[2026-05-12T05:44:08.130+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 80 for task run_dbt_staging (Bash command failed. The command returned a non-zero exit code 1.; 279)
+[2026-05-12T05:44:08.183+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-05-12T05:44:08.340+0000] {taskinstance.py:3498} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-12T05:44:08.348+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

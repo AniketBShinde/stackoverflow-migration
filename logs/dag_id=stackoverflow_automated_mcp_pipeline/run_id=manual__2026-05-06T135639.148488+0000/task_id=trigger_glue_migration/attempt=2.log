@@ -1,0 +1,49 @@
+[2026-05-06T14:01:55.938+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-06T14:01:56.079+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [queued]>
+[2026-05-06T14:01:56.108+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [queued]>
+[2026-05-06T14:01:56.110+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-06T14:01:56.150+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): trigger_glue_migration> on 2026-05-06 13:56:39.148488+00:00
+[2026-05-06T14:01:56.173+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_automated_mcp_pipeline', 'trigger_glue_migration', 'manual__2026-05-06T13:56:39.148488+00:00', '--job-id', '31', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpe4xwoxig']
+[2026-05-06T14:01:56.185+0000] {standard_task_runner.py:91} INFO - Job 31: Subtask trigger_glue_migration
+[2026-05-06T14:01:56.185+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=252) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-06T14:01:56.187+0000] {standard_task_runner.py:63} INFO - Started process 253 to run task
+[2026-05-06T14:01:56.802+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [running]> on host c947d5ddabeb
+[2026-05-06T14:01:57.793+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_automated_mcp_pipeline' AIRFLOW_CTX_TASK_ID='trigger_glue_migration' AIRFLOW_CTX_EXECUTION_DATE='2026-05-06T13:56:39.148488+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-06T13:56:39.148488+00:00'
+[2026-05-06T14:01:57.797+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-06T14:01:57.873+0000] {glue.py:173} INFO - Initializing AWS Glue Job: BigQ_to_S3_2. Wait for completion: True
+[2026-05-06T14:01:57.877+0000] {glue.py:364} INFO - Checking if job already exists: BigQ_to_S3_2
+[2026-05-06T14:01:58.115+0000] {base.py:84} INFO - Using connection ID 'aws_default' for task execution.
+[2026-05-06T14:01:58.122+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='aws_default', conn_type='aws') credentials retrieved from login and password.
+[2026-05-06T14:02:01.852+0000] {glue.py:194} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/BigQ_to_S3_2/run/jr_8c392f04a6e822fb3dc5137da7ec23f8af42a66e6dbf9ea2027864afb4994e56
+[2026-05-06T14:02:02.223+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:08.597+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:14.987+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:21.392+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:27.755+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:34.124+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:40.497+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:46.867+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:53.251+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:02:59.611+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:05.989+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:12.368+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:18.733+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:25.110+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:31.496+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:37.864+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:44.237+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:50.610+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:03:56.990+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:03.368+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:09.777+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:16.146+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:22.518+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:28.887+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:35.271+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:04:41.620+0000] {glue.py:340} INFO - Exiting Job jr_8c392f04a6e822fb3dc5137da7ec23f8af42a66e6dbf9ea2027864afb4994e56 Run State: SUCCEEDED
+[2026-05-06T14:04:41.622+0000] {glue.py:209} INFO - AWS Glue Job: BigQ_to_S3_2 status: SUCCEEDED. Run Id: jr_8c392f04a6e822fb3dc5137da7ec23f8af42a66e6dbf9ea2027864afb4994e56
+[2026-05-06T14:04:41.622+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-06T14:04:41.760+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stackoverflow_automated_mcp_pipeline, task_id=trigger_glue_migration, run_id=manual__2026-05-06T13:56:39.148488+00:00, execution_date=20260506T135639, start_date=20260506T140156, end_date=20260506T140441
+[2026-05-06T14:04:41.820+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-05-06T14:04:41.919+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-06T14:04:41.925+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

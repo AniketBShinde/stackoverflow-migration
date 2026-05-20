@@ -1,0 +1,111 @@
+[2026-05-15T20:00:38.475+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-15T20:00:38.557+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP manual__2026-05-15T19:57:12.897704+00:00 [queued]>
+[2026-05-15T20:00:38.575+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP manual__2026-05-15T19:57:12.897704+00:00 [queued]>
+[2026-05-15T20:00:38.577+0000] {taskinstance.py:2306} INFO - Starting attempt 4 of 4
+[2026-05-15T20:00:38.599+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): AUTOMATE_CLICKHOUSE_SETUP> on 2026-05-15 19:57:12.897704+00:00
+[2026-05-15T20:00:38.614+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_medallion_pipeline_v2', 'AUTOMATE_CLICKHOUSE_SETUP', 'manual__2026-05-15T19:57:12.897704+00:00', '--job-id', '118', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmp_zv49o1f']
+[2026-05-15T20:00:38.620+0000] {standard_task_runner.py:91} INFO - Job 118: Subtask AUTOMATE_CLICKHOUSE_SETUP
+[2026-05-15T20:00:38.621+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=215) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-15T20:00:38.622+0000] {standard_task_runner.py:63} INFO - Started process 216 to run task
+[2026-05-15T20:00:38.847+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_medallion_pipeline_v2.AUTOMATE_CLICKHOUSE_SETUP manual__2026-05-15T19:57:12.897704+00:00 [running]> on host db705e511191
+[2026-05-15T20:00:39.181+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_medallion_pipeline_v2' AIRFLOW_CTX_TASK_ID='AUTOMATE_CLICKHOUSE_SETUP' AIRFLOW_CTX_EXECUTION_DATE='2026-05-15T19:57:12.897704+00:00' AIRFLOW_CTX_TRY_NUMBER='4' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-15T19:57:12.897704+00:00'
+[2026-05-15T20:00:39.183+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-15T20:00:53.363+0000] {_client.py:1025} INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+[2026-05-15T20:00:55.663+0000] {logging_mixin.py:188} INFO - --- GENERATED SQL FROM CLAUDE ---
+[2026-05-15T20:00:55.664+0000] {logging_mixin.py:188} INFO - CREATE DATABASE IF NOT EXISTS big_query;
+
+CREATE TABLE IF NOT EXISTS big_query.stackoverflow_final
+(
+    id UInt64,
+    creation_date DateTime64(3),
+    post_type_id UInt8,
+    accepted_answer_id Nullable(UInt64),
+    parent_id Nullable(UInt64),
+    score Int32,
+    view_count Nullable(UInt32),
+    body Nullable(String),
+    owner_user_id Nullable(UInt64),
+    owner_display_name Nullable(String),
+    last_editor_user_id Nullable(UInt64),
+    last_editor_display_name Nullable(String),
+    last_edit_date Nullable(DateTime64(3)),
+    last_activity_date Nullable(DateTime64(3)),
+    title Nullable(String),
+    tags Nullable(String),
+    answer_count Nullable(UInt32),
+    comment_count Nullable(UInt32),
+    favorite_count Nullable(UInt32),
+    community_owned_date Nullable(DateTime64(3)),
+    closed_date Nullable(DateTime64(3))
+)
+ENGINE = MergeTree
+ORDER BY (id, creation_date);
+
+CREATE TABLE IF NOT EXISTS big_query.stackoverflow_s3_queue
+(
+    id UInt64,
+    creation_date DateTime64(3),
+    post_type_id UInt8,
+    accepted_answer_id Nullable(UInt64),
+    parent_id Nullable(UInt64),
+    score Int32,
+    view_count Nullable(UInt32),
+    body Nullable(String),
+    owner_user_id Nullable(UInt64),
+    owner_display_name Nullable(String),
+    last_editor_user_id Nullable(UInt64),
+    last_editor_display_name Nullable(String),
+    last_edit_date Nullable(DateTime64(3)),
+    last_activity_date Nullable(DateTime64(3)),
+    title Nullable(String),
+    tags Nullable(String),
+    answer_count Nullable(UInt32),
+    comment_count Nullable(UInt32),
+    favorite_count Nullable(UInt32),
+    community_owned_date Nullable(DateTime64(3)),
+    closed_date Nullable(DateTime64(3))
+)
+ENGINE = S3Queue(
+    'https://bigquerybuckets3.s3.us-east-1.amazonaws.com/raw-data/stackoverflow/*.parquet',
+    'Parquet',
+    extra_credentials(role_arn = 'arn:aws:iam::227855914163:role/ClickHouse-S3-ReadOnly-StackOverflow')
+)
+SETTINGS mode = 'unordered', s3queue_loading_retries = 3;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS big_query.stackoverflow_mv TO big_query.stackoverflow_final AS
+SELECT
+    id,
+    creation_date,
+    post_type_id,
+    accepted_answer_id,
+    parent_id,
+    score,
+    view_count,
+    body,
+    owner_user_id,
+    owner_display_name,
+    last_editor_user_id,
+    last_editor_display_name,
+    last_edit_date,
+    last_activity_date,
+    title,
+    tags,
+    answer_count,
+    comment_count,
+    favorite_count,
+    community_owned_date,
+    closed_date
+FROM big_query.stackoverflow_s3_queue;
+[2026-05-15T20:00:55.893+0000] {logging_mixin.py:188} INFO - Successfully Executed: CREATE DATABASE IF NOT EXISTS big_query...
+[2026-05-15T20:00:56.243+0000] {logging_mixin.py:188} INFO - Successfully Executed: CREATE TABLE IF NOT EXISTS big_query.stackoverflow_final
+(
+ ...
+[2026-05-15T20:00:56.894+0000] {logging_mixin.py:188} INFO - Successfully Executed: CREATE TABLE IF NOT EXISTS big_query.stackoverflow_s3_queue
+...
+[2026-05-15T20:00:57.223+0000] {logging_mixin.py:188} INFO - Successfully Executed: CREATE MATERIALIZED VIEW IF NOT EXISTS big_query.stackoverfl...
+[2026-05-15T20:00:57.223+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-15T20:00:57.224+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-15T20:00:57.278+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stackoverflow_medallion_pipeline_v2, task_id=AUTOMATE_CLICKHOUSE_SETUP, run_id=manual__2026-05-15T19:57:12.897704+00:00, execution_date=20260515T195712, start_date=20260515T200038, end_date=20260515T200057
+[2026-05-15T20:00:57.352+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-05-15T20:00:57.433+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-15T20:00:57.438+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

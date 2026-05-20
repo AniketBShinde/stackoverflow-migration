@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_posts
+    description: "Cleaned and typed StackOverflow posts from S3 raw data."
+    columns:
+      - name: post_id
+        tests:
+          - unique
+          - not_null

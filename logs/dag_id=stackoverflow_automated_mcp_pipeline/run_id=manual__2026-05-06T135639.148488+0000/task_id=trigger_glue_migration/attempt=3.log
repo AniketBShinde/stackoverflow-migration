@@ -1,0 +1,26 @@
+[2026-05-06T14:05:38.582+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-06T14:05:38.660+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [queued]>
+[2026-05-06T14:05:38.672+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [queued]>
+[2026-05-06T14:05:38.674+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 4
+[2026-05-06T14:05:38.691+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueJobOperator): trigger_glue_migration> on 2026-05-06 13:56:39.148488+00:00
+[2026-05-06T14:05:38.706+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=297) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-05-06T14:05:38.703+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_automated_mcp_pipeline', 'trigger_glue_migration', 'manual__2026-05-06T13:56:39.148488+00:00', '--job-id', '34', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_migration_dag.py', '--cfg-path', '/tmp/tmpg1t_dyou']
+[2026-05-06T14:05:38.707+0000] {standard_task_runner.py:63} INFO - Started process 298 to run task
+[2026-05-06T14:05:38.708+0000] {standard_task_runner.py:91} INFO - Job 34: Subtask trigger_glue_migration
+[2026-05-06T14:05:38.912+0000] {task_command.py:426} INFO - Running <TaskInstance: stackoverflow_automated_mcp_pipeline.trigger_glue_migration manual__2026-05-06T13:56:39.148488+00:00 [running]> on host c947d5ddabeb
+[2026-05-06T14:05:39.241+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aniket Shinde' AIRFLOW_CTX_DAG_ID='stackoverflow_automated_mcp_pipeline' AIRFLOW_CTX_TASK_ID='trigger_glue_migration' AIRFLOW_CTX_EXECUTION_DATE='2026-05-06T13:56:39.148488+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-06T13:56:39.148488+00:00'
+[2026-05-06T14:05:39.242+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-06T14:05:39.260+0000] {glue.py:173} INFO - Initializing AWS Glue Job: BigQ_to_S3_2. Wait for completion: True
+[2026-05-06T14:05:39.262+0000] {glue.py:364} INFO - Checking if job already exists: BigQ_to_S3_2
+[2026-05-06T14:05:39.312+0000] {base.py:84} INFO - Using connection ID 'aws_default' for task execution.
+[2026-05-06T14:05:39.313+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='aws_default', conn_type='aws') credentials retrieved from login and password.
+[2026-05-06T14:05:41.516+0000] {glue.py:194} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=us-east-1#/job/BigQ_to_S3_2/run/jr_589ae68a6c120f66cb2746d54026e22547bfb81fe0ffa13d4feb864ac34154c6
+[2026-05-06T14:05:41.869+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:05:48.252+0000] {glue.py:347} INFO - Polling for AWS Glue Job BigQ_to_S3_2 current run state with status RUNNING
+[2026-05-06T14:05:48.932+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2026-05-06T14:05:48.932+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-06T14:05:48.937+0000] {process_utils.py:132} INFO - Sending 15 to group 298. PIDs of all processes in the group: [298]
+[2026-05-06T14:05:48.938+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 298
+[2026-05-06T14:05:48.938+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2026-05-06T14:05:48.939+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-06T14:05:49.031+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=298, status='terminated', exitcode=0, started='14:05:38') (298) terminated with exit code 0

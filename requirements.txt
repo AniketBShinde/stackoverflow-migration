@@ -1,0 +1,19 @@
+# --- Critical Constraints to stop backtracking ---
+# These prevent pip from falling back to versions from 2018
+fakeredis[lua]>=2.20.0
+redis>=4.6.0
+opentelemetry-sdk>=1.20.0
+
+# --- Your Original Requirements ---
+apache-airflow==2.9.1
+apache-airflow-providers-amazon==8.20.0
+dbt-core==1.8.3
+dbt-clickhouse==1.8.3
+mcp
+openai
+httpx
+mcp-clickhouse
+
+# --- New Additions for the LLM Infra Step ---
+anthropic
+clickhouse-connect
