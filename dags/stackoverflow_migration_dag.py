@@ -122,9 +122,14 @@ with DAG(
         bash_command=f'cd {DBT_PROJECT_DIR} && dbt run --select staging',
     )
 
+    run_dbt_tests = BashOperator(
+    task_id='run_dbt_tests',
+    bash_command=f'cd {DBT_PROJECT_DIR} && dbt test --select staging',
+    )
+
     run_dbt_marts = BashOperator(
         task_id='run_dbt_marts',
         bash_command=f'cd {DBT_PROJECT_DIR} && dbt run --select marts',
     )
 
-    trigger_glue_migration >> automate_clickhouse_setup >> run_dbt_staging >> run_dbt_marts
+    trigger_glue_migration >> automate_clickhouse_setup >> run_dbt_staging >> run_dbt_tests >> run_dbt_marts

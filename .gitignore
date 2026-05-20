@@ -5,3 +5,4 @@ __pycache__/
 postgres-data/
 target/
 dbt_packages/
+logs/
