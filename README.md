@@ -13,21 +13,27 @@ Traditional enterprise data migrations suffer from significant operational frict
 This project completely automates those components by decoupling extraction from infrastructure initialization. By pairing the Anthropic Claude API with the Model Context Protocol (MCP) inside an Airflow DAG workflow, the system dynamically inspects raw data staging files, auto-compiles optimal ClickHouse target tables, and triggers downstream dbt models to transform raw historical strings into high-performance analytical indices — all without any hardcoded passwords or human engineering intervention.
 
 ---
-
 ## 2. Architecture & Core Data Flow
 
 The conceptual flow below illustrates how data routes across cloud boundaries and execution ecosystems:
 
-[Google BigQuery (GCP)] 
+```text
+[Google BigQuery (GCP)]
        │
        ▼ (Orchestrated AWS Glue Managed Ingestion)
-[Amazon S3 (Staging Lake)] <─── (Secured Token Access via IAM Role ARN)
-       │
+
+[Amazon S3 (Staging Lake)]
+       ▲
+       │ (Secured Token Access via IAM Role ARN)
+
        ▼ (Anthropic API / Claude Infrastructure Generation via MCP)
+
 [ClickHouse Cloud (Bronze Target)]
        │
        ▼ (dbt Incremental Processing & Array Normalization)
+
 [Final Analytics Marts (Silver & Gold Layers)]
+```
 
 ### The Technical Execution Sequence
 
@@ -80,12 +86,12 @@ This repository separates the scheduling orchestration layer cleanly from the do
 
 ## 5. Medallion Transformation Details (dbt)
 
-[cite_start]Data loaded into ClickHouse Cloud is processed through a strict Medallion data structure architecture within the stackoverflow_analytics module[cite: 53, 54]:
+Data loaded into ClickHouse Cloud is processed through a strict Medallion data structure architecture within the stackoverflow_analytics module:
 
-* [cite_start]**Bronze (Raw Landing Layer)** — Tracks raw, immutable events streamed instantly from staging storage folders through the S3Queue interface engine[cite: 54].
-* [cite_start]**Silver (Normalized Data Layer)** — Cleans and normalizes formatting anomalies[cite: 54]. [cite_start]Specifically, loose concatenated string formats (e.g., tags stored as raw text strings like <python><aws>) are parsed directly into indexable, native ClickHouse arrays for lightning-fast lookups[cite: 55].
-* [cite_start]**Gold (Analytical Marts Layer)** — Creates the high-value analytics marts, aggregating community technology adoption matrices and reputation indexing ready to be consumed immediately by downstream dashboard engines[cite: 55].
-* [cite_start]**Incremental Optimization** — Embeds a 7-day lookback buffer window to effortlessly protect against backfilled out-of-order records while saving computing fees by bypassing full historic table re-scans[cite: 55].
+* Bronze (Raw Landing Layer) — Tracks raw, immutable events streamed instantly from staging storage folders through the S3Queue interface engine.
+* Silver (Normalized Data Layer) — Cleans and normalizes formatting anomalies. Specifically, loose concatenated string formats (e.g., tags stored as raw text strings like <python><aws>) are parsed directly into indexable, native ClickHouse arrays for lightning-fast lookups.
+* Gold (Analytical Marts Layer) — Creates the high-value analytics marts, aggregating community technology adoption matrices and reputation indexing ready to be consumed immediately by downstream dashboard engines.
+* Incremental Optimization — Embeds a 7-day lookback buffer window to effortlessly protect against backfilled out-of-order records while saving computing fees by bypassing full historic table re-scans.
 
 ---
 
