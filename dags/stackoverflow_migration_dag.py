@@ -36,7 +36,7 @@ def run_llm_infra_setup():
     'Parquet',
     extra_credentials(role_arn = 'arn:aws:iam::227855914163:role/ClickHouse-S3-ReadOnly-StackOverflow'));
 
-    Create Target: Create the table big_query.stackoverflow_final using MergeTree. Automate the types: Map the Parquet types to ClickHouse types (e.g., DateTime64 for dates). Use id and creation_date for the ORDER BY.
+    Create Target: Create the table big_query.stackoverflow_final using MergeTree. Automate the types: Map the Parquet types to ClickHouse types (e.g., DateTime64 for dates). Use tags and creation_date for the ORDER BY.
 
     Create Queue: Create big_query.stackoverflow_queue using the S3Queue engine with these same inline credentials.
 
