@@ -22,21 +22,16 @@ The conceptual flow below illustrates how data routes across cloud boundaries an
 [Google BigQuery (GCP)]
        │
        ▼ (Orchestrated AWS Glue Managed Ingestion)
-
 [Amazon S3 (Staging Lake)]
        ▲
        │ (Secured Token Access via IAM Role ARN)
-
        ▼ (Anthropic API / Claude Infrastructure Generation via MCP)
-
 [ClickHouse Cloud (Bronze Target)]
        │
        ▼ (dbt Incremental Processing & Array Normalization)
-
 [dbt Validation Layer]
        │
        ▼
-
 [Final Analytics Marts (Silver & Gold Layers)]
 ```
 
@@ -174,7 +169,7 @@ This layer aggregates:
 
 ## Incremental Optimization
 
-The dbt transformation layer embeds a rolling 7-day incremental lookback window to protect against delayed arriving records and avoid expensive full historical reprocessing scans.
+The dbt transformation layer embeds a rolling 5-day incremental lookback window to protect against delayed arriving records and avoid expensive full historical reprocessing scans.
 
 This improves:
 
@@ -217,6 +212,8 @@ The final orchestration sequence becomes:
 Glue Extraction
       ↓
 Claude Infrastructure Generation
+      ↓
+S3Queue Ingestion Completion Gate
       ↓
 dbt Staging Models
       ↓
@@ -267,6 +264,8 @@ This eliminates the need for:
 
 The ingestion design remains lightweight while still supporting near-real-time streaming behavior.
 
+While ClickHouse handles ingestion autonomously, the orchestration layer includes an explicit completion gate before downstream transformations begin. A polling task observes the row count of the Bronze landing table and only releases control to dbt once the count has remained stable across consecutive checks, signaling that S3Queue has finished draining all available Parquet objects. This prevents the well-known race condition where transformation models execute against a partially loaded source table.
+
 ---
 
 # 8. Security Architecture
@@ -303,7 +302,7 @@ Examples include:
 - grouped OLAP aggregation,
 - and comparative growth analysis.
 
-Despite scanning millions of transformed records, analytical queries consistently execute in sub-second latency windows due to ClickHouse’s columnar architecture and MergeTree indexing strategy.
+Despite scanning millions of transformed records, analytical queries consistently execute in sub-second latency windows due to ClickHouse's columnar architecture and MergeTree indexing strategy.
 
 ---
 
@@ -355,8 +354,3 @@ docker compose up -d --build
 ```bash
 docker compose ps
 ```
-
----
-
-
-
